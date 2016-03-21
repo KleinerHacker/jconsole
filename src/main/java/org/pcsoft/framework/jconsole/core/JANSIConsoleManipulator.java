@@ -1,10 +1,8 @@
 package org.pcsoft.framework.jconsole.core;
 
 import org.apache.commons.lang.SystemUtils;
-import org.pcsoft.framework.jconsole.JConsoleManipulatorEx;
 import org.pcsoft.framework.jconsole.core.ansi.ANSIUtils;
 import org.pcsoft.framework.jconsole.exception.JConsoleException;
-import org.pcsoft.framework.jconsole.type.JConsoleColor;
 
 import java.awt.*;
 import java.io.BufferedWriter;
@@ -13,7 +11,7 @@ import java.io.IOException;
 /**
  * Created by Christoph on 18.03.2016.
  */
-public final class JANSIConsoleManipulator implements JConsoleManipulatorEx {
+public final class JANSIConsoleManipulator extends JAbstractConsoleManipulatorEx {
     private BufferedWriter standardWriter, errorWriter;
 
     @Override
@@ -42,52 +40,22 @@ public final class JANSIConsoleManipulator implements JConsoleManipulatorEx {
     }
 
     @Override
-    public void setForegroundColor(JConsoleColor color) throws JConsoleException {
+    protected void updateStyle() throws JConsoleException {
         try {
-            standardWriter.write(ANSIUtils.getForegroundANSIColor(color));
+            standardWriter.write(ANSIUtils.getANSIStyle(getBold(), getForegroundColor(), getBackgroundColor()));
             standardWriter.flush();
         } catch (IOException e) {
-            throw new JConsoleException("Unable to change foreground color", e);
+            throw new JConsoleException("Unable to change caret visibility", e);
         }
     }
 
     @Override
-    public void setBackgroundColor(JConsoleColor color) throws JConsoleException {
+    protected void updateCaretVisible(boolean visible) throws JConsoleException {
         try {
-            standardWriter.write(ANSIUtils.getBackgroundANSIColor(color));
+            standardWriter.write(ANSIUtils.getANSICaretVisible(visible));
             standardWriter.flush();
         } catch (IOException e) {
-            throw new JConsoleException("Unable to change background color", e);
-        }
-    }
-
-    @Override
-    public JConsoleColor getForegroundColor() throws JConsoleException {
-        return null;
-    }
-
-    @Override
-    public JConsoleColor getBackgroundColor() throws JConsoleException {
-        return null;
-    }
-
-    @Override
-    public void resetForegroundColor() throws JConsoleException {
-        try {
-            standardWriter.write(ANSIUtils.getResetForegroundANSIColor());
-            standardWriter.flush();
-        } catch (IOException e) {
-            throw new JConsoleException("Unable to reset foreground color", e);
-        }
-    }
-
-    @Override
-    public void resetBackgroundColor() throws JConsoleException {
-        try {
-            standardWriter.write(ANSIUtils.getResetBackgroundANSIColor());
-            standardWriter.flush();
-        } catch (IOException e) {
-            throw new JConsoleException("Unable to reset background color", e);
+            throw new JConsoleException("Unable to change caret visibility", e);
         }
     }
 

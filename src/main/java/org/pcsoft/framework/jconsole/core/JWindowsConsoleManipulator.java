@@ -1,9 +1,7 @@
 package org.pcsoft.framework.jconsole.core;
 
 import org.apache.commons.lang.SystemUtils;
-import org.pcsoft.framework.jconsole.JConsoleManipulatorEx;
 import org.pcsoft.framework.jconsole.exception.JConsoleException;
-import org.pcsoft.framework.jconsole.type.JConsoleColor;
 
 import java.awt.*;
 import java.io.BufferedWriter;
@@ -11,7 +9,7 @@ import java.io.BufferedWriter;
 /**
  * Created by Christoph on 18.03.2016.
  */
-public final class JWindowsConsoleManipulator implements JConsoleManipulatorEx {
+public final class JWindowsConsoleManipulator extends JAbstractConsoleManipulatorEx {
     private BufferedWriter standardWriter, errorWriter;
 
     @Override
@@ -35,32 +33,12 @@ public final class JWindowsConsoleManipulator implements JConsoleManipulatorEx {
     }
 
     @Override
-    public void setForegroundColor(JConsoleColor color) throws JConsoleException {
+    protected void updateStyle() throws JConsoleException {
 
     }
 
     @Override
-    public void setBackgroundColor(JConsoleColor color) throws JConsoleException {
-
-    }
-
-    @Override
-    public JConsoleColor getForegroundColor() throws JConsoleException {
-        return null;
-    }
-
-    @Override
-    public JConsoleColor getBackgroundColor() throws JConsoleException {
-        return null;
-    }
-
-    @Override
-    public void resetForegroundColor() throws JConsoleException {
-
-    }
-
-    @Override
-    public void resetBackgroundColor() throws JConsoleException {
+    protected void updateCaretVisible(boolean visible) throws JConsoleException {
 
     }
 

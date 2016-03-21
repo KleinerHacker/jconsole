@@ -7,20 +7,24 @@ import org.pcsoft.framework.jconsole.type.JConsoleColor;
  */
 public final class ANSIUtils {
 
-    public static String getForegroundANSIColor(JConsoleColor consoleColor) {
+    private static String getForegroundANSIColor(JConsoleColor consoleColor) {
         return String.format(ANSIConstants.TAG_COLOR_FOREGROUND, getANSIColorNumber(consoleColor));
     }
 
-    public static String getResetForegroundANSIColor() {
-        return String.format(ANSIConstants.TAG_COLOR_FOREGROUND, 9);
-    }
-
-    public static String getBackgroundANSIColor(JConsoleColor consoleColor) {
+    private static String getBackgroundANSIColor(JConsoleColor consoleColor) {
         return String.format(ANSIConstants.TAG_COLOR_BACKGROUND, getANSIColorNumber(consoleColor));
     }
 
-    public static String getResetBackgroundANSIColor() {
-        return String.format(ANSIConstants.TAG_COLOR_BACKGROUND, 9);
+    public static String getANSIStyle(boolean bold, JConsoleColor foregroundColor, JConsoleColor backgroundColor) {
+        final StringBuilder sb = new StringBuilder();
+        sb.append(ANSIConstants.TAG_STYLE_UNSET);
+        if (bold) {
+            sb.append(ANSIConstants.TAG_STYLE_BOLD);
+        }
+        sb.append(getForegroundANSIColor(foregroundColor));
+        sb.append(getBackgroundANSIColor(backgroundColor));
+
+        return sb.toString();
     }
 
     private static int getANSIColorNumber(JConsoleColor consoleColor) {
@@ -41,6 +45,8 @@ public final class ANSIUtils {
                 return 6;
             case White:
                 return 7;
+            case Default:
+                return 9;
             default:
                 throw new RuntimeException();
         }
@@ -52,6 +58,10 @@ public final class ANSIUtils {
 
     public static String getANSICaretGotoHome() {
         return ANSIConstants.TAG_CARET_GOTO_HOME;
+    }
+
+    public static String getANSICaretVisible(boolean visible) {
+        return visible ? ANSIConstants.TAG_CARET_VISIBLE : ANSIConstants.TAG_CARET_INVISIBLE;
     }
 
     private ANSIUtils() {

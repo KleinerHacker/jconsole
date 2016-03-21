@@ -20,6 +20,12 @@ public class TestJConsole {
         console.writeLine("Hello World");
         console.resetForegroundColor();
 
+        console.setForegroundColor(JConsoleColor.Green);
+        console.setBold(true);
+        console.write("Hello");
+        console.setBold(false);
+        console.writeLine(" World");
+
         console.setForegroundColor(JConsoleColor.Blue);
         console.gotoCaretPosition(10, 10);
         console.writeLine("Hello World");

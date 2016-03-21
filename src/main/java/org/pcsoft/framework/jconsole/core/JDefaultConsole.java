@@ -1,5 +1,7 @@
 package org.pcsoft.framework.jconsole.core;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ObjectProperty;
 import org.pcsoft.framework.jconsole.JConsole;
 import org.pcsoft.framework.jconsole.JConsoleManipulator;
 import org.pcsoft.framework.jconsole.JConsoleManipulatorFactory;
@@ -175,5 +177,45 @@ public final class JDefaultConsole implements JConsole {
     @Override
     public void resertColor() throws JConsoleException {
         consoleManipulator.resertColor();
+    }
+
+    @Override
+    public void setCaretVisible(boolean flag) throws JConsoleException {
+        consoleManipulator.setCaretVisible(flag);
+    }
+
+    @Override
+    public BooleanProperty caretVisibleProperty() throws JConsoleException {
+        return consoleManipulator.caretVisibleProperty();
+    }
+
+    @Override
+    public boolean getCaretVisible() throws JConsoleException {
+        return consoleManipulator.getCaretVisible();
+    }
+
+    @Override
+    public ObjectProperty<JConsoleColor> foregroundColorProperty() {
+        return consoleManipulator.foregroundColorProperty();
+    }
+
+    @Override
+    public ObjectProperty<JConsoleColor> backgroundColorProperty() {
+        return consoleManipulator.backgroundColorProperty();
+    }
+
+    @Override
+    public void setBold(boolean bold) throws JConsoleException {
+        consoleManipulator.setBold(bold);
+    }
+
+    @Override
+    public BooleanProperty boldProperty() throws JConsoleException {
+        return consoleManipulator.boldProperty();
+    }
+
+    @Override
+    public boolean getBold() throws JConsoleException {
+        return consoleManipulator.getBold();
     }
 }

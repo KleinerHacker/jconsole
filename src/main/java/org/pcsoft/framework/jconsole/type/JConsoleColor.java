@@ -12,5 +12,6 @@ public enum JConsoleColor {
     Magenta,
     Cyan,
     White,
+    Default
     ;
 }

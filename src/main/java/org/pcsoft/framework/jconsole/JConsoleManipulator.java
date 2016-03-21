@@ -1,5 +1,7 @@
 package org.pcsoft.framework.jconsole;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ObjectProperty;
 import org.pcsoft.framework.jconsole.exception.JConsoleException;
 import org.pcsoft.framework.jconsole.type.JConsoleColor;
 
@@ -20,6 +22,9 @@ public interface JConsoleManipulator {
     Point getCaretPosition() throws JConsoleException;
     void storeCaretPosition() throws JConsoleException;
     void resetCaretPosition() throws JConsoleException;
+    void setCaretVisible(boolean flag) throws JConsoleException;
+    BooleanProperty caretVisibleProperty() throws JConsoleException;
+    boolean getCaretVisible() throws JConsoleException;
 
     void setForegroundColor(JConsoleColor color) throws JConsoleException;
     void setBackgroundColor(JConsoleColor color) throws JConsoleException;
@@ -27,6 +32,8 @@ public interface JConsoleManipulator {
         setForegroundColor(foregroundColor);
         setBackgroundColor(backgroundColor);
     }
+    ObjectProperty<JConsoleColor> foregroundColorProperty();
+    ObjectProperty<JConsoleColor> backgroundColorProperty();
     JConsoleColor getForegroundColor() throws JConsoleException;
     JConsoleColor getBackgroundColor() throws JConsoleException;
     void resetForegroundColor() throws JConsoleException;
@@ -35,4 +42,8 @@ public interface JConsoleManipulator {
         resetForegroundColor();
         resetBackgroundColor();
     }
+
+    void setBold(boolean bold) throws JConsoleException;
+    BooleanProperty boldProperty() throws JConsoleException;
+    boolean getBold() throws JConsoleException;
 }
