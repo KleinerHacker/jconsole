@@ -120,23 +120,8 @@ public final class JDefaultConsole implements JConsole {
     }
 
     @Override
-    public void gotoCaretPosition(Point point) throws JConsoleException {
-        consoleManipulator.gotoCaretPosition(point);
-    }
-
-    @Override
-    public void moveCaretUp() throws JConsoleException {
-        consoleManipulator.moveCaretUp();
-    }
-
-    @Override
     public void moveCaretUp(int count) throws JConsoleException {
         consoleManipulator.moveCaretUp(count);
-    }
-
-    @Override
-    public void moveCaretDown() throws JConsoleException {
-        consoleManipulator.moveCaretDown();
     }
 
     @Override
@@ -145,18 +130,8 @@ public final class JDefaultConsole implements JConsole {
     }
 
     @Override
-    public void moveCaretForward() throws JConsoleException {
-        consoleManipulator.moveCaretForward();
-    }
-
-    @Override
     public void moveCaretForward(int count) throws JConsoleException {
         consoleManipulator.moveCaretForward(count);
-    }
-
-    @Override
-    public void moveCaretBackward() throws JConsoleException {
-        consoleManipulator.moveCaretBackward();
     }
 
     @Override
@@ -190,11 +165,6 @@ public final class JDefaultConsole implements JConsole {
     }
 
     @Override
-    public void setColor(JConsoleColor foregroundColor, JConsoleColor backgroundColor) throws JConsoleException {
-        consoleManipulator.setColor(foregroundColor, backgroundColor);
-    }
-
-    @Override
     public JConsoleColor getForegroundColor() throws JConsoleException {
         return consoleManipulator.getForegroundColor();
     }
@@ -212,11 +182,6 @@ public final class JDefaultConsole implements JConsole {
     @Override
     public void resetBackgroundColor() throws JConsoleException {
         consoleManipulator.resetBackgroundColor();
-    }
-
-    @Override
-    public void resetColor() throws JConsoleException {
-        consoleManipulator.resetColor();
     }
 
     @Override
@@ -275,21 +240,6 @@ public final class JDefaultConsole implements JConsole {
     }
 
     @Override
-    public void clearLine(int line) throws JConsoleException {
-        consoleManipulator.clearLine(line);
-    }
-
-    @Override
-    public void clearLineAfterCaret(int x, int y) throws JConsoleException {
-        consoleManipulator.clearLineAfterCaret(x, y);
-    }
-
-    @Override
-    public void clearLineBeforeCaret(int x, int y) throws JConsoleException {
-        consoleManipulator.clearLineBeforeCaret(x, y);
-    }
-
-    @Override
     public void clearScreen() throws JConsoleException {
         consoleManipulator.clearScreen();
     }
@@ -300,27 +250,32 @@ public final class JDefaultConsole implements JConsole {
     }
 
     @Override
-    public void clearScreenAfter(int x, int y) throws JConsoleException {
-        consoleManipulator.clearScreenAfter(x, y);
-    }
-
-    @Override
-    public void clearScreenAfter(int line) throws JConsoleException {
-        consoleManipulator.clearScreenAfter(line);
-    }
-
-    @Override
     public void clearScreenBefore() throws JConsoleException {
         consoleManipulator.clearScreenBefore();
     }
 
     @Override
-    public void clearScreenBefore(int x, int y) throws JConsoleException {
-        consoleManipulator.clearScreenBefore(x, y);
+    public void clearCharacter(int count) throws JConsoleException {
+        consoleManipulator.clearCharacter(count);
     }
 
     @Override
-    public void clearScreenBefore(int line) throws JConsoleException {
-        consoleManipulator.clearScreenBefore(line);
+    public void insertSpace(int count) throws JConsoleException {
+        consoleManipulator.insertSpace(count);
+    }
+
+    @Override
+    public void deleteCharacter(int count) throws JConsoleException {
+        consoleManipulator.deleteCharacter(count);
+    }
+
+    @Override
+    public void insertLine(int count) throws JConsoleException {
+        consoleManipulator.insertLine(count);
+    }
+
+    @Override
+    public void deleteLine(int count) throws JConsoleException {
+        consoleManipulator.deleteLine(count);
     }
 }

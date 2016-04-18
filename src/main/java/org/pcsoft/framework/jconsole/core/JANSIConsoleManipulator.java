@@ -1,10 +1,7 @@
 package org.pcsoft.framework.jconsole.core;
 
 import org.apache.commons.lang.SystemUtils;
-import org.pcsoft.framework.jconsole.core.ansi.ANSICaretMoveAction;
-import org.pcsoft.framework.jconsole.core.ansi.ANSICaretStoreAction;
-import org.pcsoft.framework.jconsole.core.ansi.ANSIClearAction;
-import org.pcsoft.framework.jconsole.core.ansi.ANSIUtils;
+import org.pcsoft.framework.jconsole.core.ansi.*;
 import org.pcsoft.framework.jconsole.exception.JConsoleException;
 
 import java.awt.*;
@@ -166,6 +163,56 @@ public final class JANSIConsoleManipulator extends JAbstractConsoleManipulatorEx
     public void clearLineBeforeCaret() throws JConsoleException {
         try {
             standardWriter.write(ANSIUtils.getANSIClearAction(ANSIClearAction.LineBefore));
+            standardWriter.flush();
+        } catch (IOException e) {
+            throw new JConsoleException("Unable to clear line before caret", e);
+        }
+    }
+
+    @Override
+    public void clearCharacter(int count) throws JConsoleException {
+        try {
+            standardWriter.write(ANSIUtils.getANSIClearAction(ANSIClearAction.Character, count));
+            standardWriter.flush();
+        } catch (IOException e) {
+            throw new JConsoleException("Unable to clear line before caret", e);
+        }
+    }
+
+    @Override
+    public void insertSpace(int count) throws JConsoleException {
+        try {
+            standardWriter.write(ANSIUtils.getANSIModifyAction(ANSIModifyAction.InsertSpace, count));
+            standardWriter.flush();
+        } catch (IOException e) {
+            throw new JConsoleException("Unable to clear line before caret", e);
+        }
+    }
+
+    @Override
+    public void deleteCharacter(int count) throws JConsoleException {
+        try {
+            standardWriter.write(ANSIUtils.getANSIModifyAction(ANSIModifyAction.DeleteCharacter, count));
+            standardWriter.flush();
+        } catch (IOException e) {
+            throw new JConsoleException("Unable to clear line before caret", e);
+        }
+    }
+
+    @Override
+    public void insertLine(int count) throws JConsoleException {
+        try {
+            standardWriter.write(ANSIUtils.getANSIModifyAction(ANSIModifyAction.InsertLine, count));
+            standardWriter.flush();
+        } catch (IOException e) {
+            throw new JConsoleException("Unable to clear line before caret", e);
+        }
+    }
+
+    @Override
+    public void deleteLine(int count) throws JConsoleException {
+        try {
+            standardWriter.write(ANSIUtils.getANSIModifyAction(ANSIModifyAction.DeleteLine, count));
             standardWriter.flush();
         } catch (IOException e) {
             throw new JConsoleException("Unable to clear line before caret", e);

@@ -16,7 +16,11 @@ public class TestJConsole {
         final JConsole console = JConsoleFactory.getDefaultConsole();
         console.setConsoleManipulator(JANSIConsoleManipulator.class);
         console.clearScreen();
-        console.write("\u001B[c");
+
+//        console.gotoCaretPosition(1,1);
+//        console.writeLine("Hallo");
+//        console.gotoCaretPosition(1,1);
+//        console.write("\u001B[4X");
 
         console.setForegroundColor(JConsoleColor.Red);
         console.writeLine("Hello World");
@@ -35,7 +39,23 @@ public class TestJConsole {
         console.moveCaretDown();
 
         try {
-            Thread.sleep(5000);
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        console.deleteLineAt(0);
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        console.deleteCharacterAt(0, 0, 2);
+
+        try {
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

@@ -93,6 +93,31 @@ public final class JWindowsConsoleManipulator extends JAbstractConsoleManipulato
     }
 
     @Override
+    public void clearCharacter(int count) throws JConsoleException {
+
+    }
+
+    @Override
+    public void insertSpace(int count) throws JConsoleException {
+
+    }
+
+    @Override
+    public void deleteCharacter(int count) throws JConsoleException {
+
+    }
+
+    @Override
+    public void insertLine(int count) throws JConsoleException {
+
+    }
+
+    @Override
+    public void deleteLine(int count) throws JConsoleException {
+
+    }
+
+    @Override
     public boolean fitForCurrentOS() {
         return SystemUtils.IS_OS_WINDOWS;
     }

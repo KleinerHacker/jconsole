@@ -77,7 +77,25 @@ public final class ANSIUtils {
     }
 
     public static String getANSIClearAction(ANSIClearAction clearAction) {
+        if (clearAction.isNeedsCount())
+            throw new IllegalArgumentException("Value " + clearAction.isNeedsCount() + " needs a count value");
+
         return clearAction.getCode();
+    }
+
+    public static String getANSIClearAction(ANSIClearAction clearAction, int count) {
+        if (!clearAction.isNeedsCount())
+            throw new IllegalArgumentException("Value " + clearAction.name() + " do not need a count value");
+
+        return String.format(clearAction.getCode(), count);
+    }
+
+    public static String getANSIModifyAction(ANSIModifyAction modifyAction) {
+        return getANSIModifyAction(modifyAction, 1);
+    }
+
+    public static String getANSIModifyAction(ANSIModifyAction modifyAction, int count) {
+        return String.format(modifyAction.getCode(), count);
     }
 
     private ANSIUtils() {

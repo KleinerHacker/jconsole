@@ -22,12 +22,18 @@ final class ANSIConstants {
     public static final String TAG_CARET_MOVE_FORWARD = TAG_START + "%sC";
     public static final String TAG_CARET_MOVE_BACKWARD = TAG_START + "%sD";
 
-    public static final String TAG_CLEAR_SCREEN = TAG_START + "2J";
-    public static final String TAG_CLEAR_SCREEN_AFTER = TAG_START + "J";
-    public static final String TAG_CLEAR_SCREEN_BEFORE = TAG_START + "1J";
-    public static final String TAG_CLEAR_LINE = TAG_START + "2K";
-    public static final String TAG_CLEAR_LINE_AFTER = TAG_START + "0K";
-    public static final String TAG_CLEAR_LINE_BEFORE = TAG_START + "1K";
+    public static final String TAG_MODIFY_CLEAR_SCREEN = TAG_START + "2J";
+    public static final String TAG_MODIFY_CLEAR_SCREEN_AFTER = TAG_START + "J";
+    public static final String TAG_MODIFY_CLEAR_SCREEN_BEFORE = TAG_START + "1J";
+    public static final String TAG_MODIFY_CLEAR_LINE = TAG_START + "2K";
+    public static final String TAG_MODIFY_CLEAR_LINE_AFTER = TAG_START + "0K";
+    public static final String TAG_MODIFY_CLEAR_LINE_BEFORE = TAG_START + "1K";
+    public static final String TAG_MODIFY_CLEAR_CHARACTER = TAG_START + "%sX";
+
+    public static final String TAG_MODIFY_INSERT_CHARACTER = TAG_START + "%s@";
+    public static final String TAG_MODIFY_DELETE_CHARACTER = TAG_START + "%sP";
+    public static final String TAG_MODIFY_INSERT_LINE = TAG_START + "%sL";
+    public static final String TAG_MODIFY_DELETE_LINE = TAG_START + "%sM";
 
     private ANSIConstants() {
     }

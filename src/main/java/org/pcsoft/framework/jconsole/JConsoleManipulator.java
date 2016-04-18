@@ -116,6 +116,87 @@ public interface JConsoleManipulator {
             restoreCaretPosition();
         }
     }
+    void clearCharacter(int count) throws JConsoleException;
+    default void clearCharacter() throws JConsoleException {
+        clearCharacter(1);
+    }
+    default void clearCharacterAt(int x, int y, int count) throws JConsoleException {
+        storeCaretPosition();
+        try {
+            gotoCaretPosition(x, y);
+            clearCharacter(count);
+        } finally {
+            restoreCaretPosition();
+        }
+    }
+    default void clearCharacterAt(int x, int y) throws JConsoleException {
+        clearCharacterAt(x, y, 1);
+    }
+
+    void insertSpace(int count) throws JConsoleException;
+    default void insertSpace() throws JConsoleException {
+        insertSpace(1);
+    }
+    default void insertSpaceAt(int x, int y, int count) throws JConsoleException {
+        storeCaretPosition();
+        try {
+            gotoCaretPosition(x, y);
+            insertSpace(count);
+        } finally {
+            restoreCaretPosition();
+        }
+    }
+    default void insertSpaceAt(int x, int y) throws JConsoleException {
+        insertSpaceAt(x, y, 1);
+    }
+    void deleteCharacter(int count) throws JConsoleException;
+    default void deleteCharacter() throws JConsoleException {
+        deleteCharacter(1);
+    }
+    default void deleteCharacterAt(int x, int y, int count) throws JConsoleException {
+        storeCaretPosition();
+        try {
+            gotoCaretPosition(x, y);
+            deleteCharacter(count);
+        } finally {
+            restoreCaretPosition();
+        }
+    }
+    default void deleteCharacterAt(int x, int y) throws JConsoleException {
+        deleteCharacterAt(x, y, 1);
+    }
+    void insertLine(int count) throws JConsoleException;
+    default void insertLine() throws JConsoleException {
+        insertLine(1);
+    }
+    default void insertLineAt(int line, int count) throws JConsoleException {
+        storeCaretPosition();
+        try {
+            gotoCaretPosition(0, line);
+            insertLine(count);
+        } finally {
+            restoreCaretPosition();
+        }
+    }
+    default void insertLineAt(int line) throws JConsoleException {
+        insertLineAt(line, 1);
+    }
+    void deleteLine(int count) throws JConsoleException;
+    default void deleteLine() throws JConsoleException {
+        deleteLine(1);
+    }
+    default void deleteLineAt(int line, int count) throws JConsoleException {
+        storeCaretPosition();
+        try {
+            gotoCaretPosition(0, line);
+            deleteLine(count);
+        } finally {
+            restoreCaretPosition();
+        }
+    }
+    default void deleteLineAt(int line) throws JConsoleException {
+        deleteLineAt(line, 1);
+    }
 
     void setBold(boolean bold) throws JConsoleException;
     BooleanProperty boldProperty() throws JConsoleException;
