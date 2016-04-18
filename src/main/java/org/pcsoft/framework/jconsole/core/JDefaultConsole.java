@@ -125,6 +125,46 @@ public final class JDefaultConsole implements JConsole {
     }
 
     @Override
+    public void moveCaretUp() throws JConsoleException {
+        consoleManipulator.moveCaretUp();
+    }
+
+    @Override
+    public void moveCaretUp(int count) throws JConsoleException {
+        consoleManipulator.moveCaretUp(count);
+    }
+
+    @Override
+    public void moveCaretDown() throws JConsoleException {
+        consoleManipulator.moveCaretDown();
+    }
+
+    @Override
+    public void moveCaretDown(int count) throws JConsoleException {
+        consoleManipulator.moveCaretDown(count);
+    }
+
+    @Override
+    public void moveCaretForward() throws JConsoleException {
+        consoleManipulator.moveCaretForward();
+    }
+
+    @Override
+    public void moveCaretForward(int count) throws JConsoleException {
+        consoleManipulator.moveCaretForward(count);
+    }
+
+    @Override
+    public void moveCaretBackward() throws JConsoleException {
+        consoleManipulator.moveCaretBackward();
+    }
+
+    @Override
+    public void moveCaretBackward(int count) throws JConsoleException {
+        consoleManipulator.moveCaretBackward(count);
+    }
+
+    @Override
     public Point getCaretPosition() throws JConsoleException {
         return consoleManipulator.getCaretPosition();
     }
@@ -135,8 +175,8 @@ public final class JDefaultConsole implements JConsole {
     }
 
     @Override
-    public void resetCaretPosition() throws JConsoleException {
-        consoleManipulator.resetCaretPosition();
+    public void restoreCaretPosition() throws JConsoleException {
+        consoleManipulator.restoreCaretPosition();
     }
 
     @Override
@@ -175,8 +215,8 @@ public final class JDefaultConsole implements JConsole {
     }
 
     @Override
-    public void resertColor() throws JConsoleException {
-        consoleManipulator.resertColor();
+    public void resetColor() throws JConsoleException {
+        consoleManipulator.resetColor();
     }
 
     @Override
@@ -217,5 +257,70 @@ public final class JDefaultConsole implements JConsole {
     @Override
     public boolean getBold() throws JConsoleException {
         return consoleManipulator.getBold();
+    }
+
+    @Override
+    public void clearLine() throws JConsoleException {
+        consoleManipulator.clearLine();
+    }
+
+    @Override
+    public void clearLineAfterCaret() throws JConsoleException {
+        consoleManipulator.clearLineAfterCaret();
+    }
+
+    @Override
+    public void clearLineBeforeCaret() throws JConsoleException {
+        consoleManipulator.clearLineBeforeCaret();
+    }
+
+    @Override
+    public void clearLine(int line) throws JConsoleException {
+        consoleManipulator.clearLine(line);
+    }
+
+    @Override
+    public void clearLineAfterCaret(int x, int y) throws JConsoleException {
+        consoleManipulator.clearLineAfterCaret(x, y);
+    }
+
+    @Override
+    public void clearLineBeforeCaret(int x, int y) throws JConsoleException {
+        consoleManipulator.clearLineBeforeCaret(x, y);
+    }
+
+    @Override
+    public void clearScreen() throws JConsoleException {
+        consoleManipulator.clearScreen();
+    }
+
+    @Override
+    public void clearScreenAfter() throws JConsoleException {
+        consoleManipulator.clearScreenAfter();
+    }
+
+    @Override
+    public void clearScreenAfter(int x, int y) throws JConsoleException {
+        consoleManipulator.clearScreenAfter(x, y);
+    }
+
+    @Override
+    public void clearScreenAfter(int line) throws JConsoleException {
+        consoleManipulator.clearScreenAfter(line);
+    }
+
+    @Override
+    public void clearScreenBefore() throws JConsoleException {
+        consoleManipulator.clearScreenBefore();
+    }
+
+    @Override
+    public void clearScreenBefore(int x, int y) throws JConsoleException {
+        consoleManipulator.clearScreenBefore(x, y);
+    }
+
+    @Override
+    public void clearScreenBefore(int line) throws JConsoleException {
+        consoleManipulator.clearScreenBefore(line);
     }
 }

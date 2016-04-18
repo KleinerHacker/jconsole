@@ -64,6 +64,22 @@ public final class ANSIUtils {
         return visible ? ANSIConstants.TAG_CARET_VISIBLE : ANSIConstants.TAG_CARET_INVISIBLE;
     }
 
+    public static String getANSICaretAction(ANSICaretStoreAction caretAction) {
+        return caretAction.getCode();
+    }
+
+    public static String getANSICaretAction(ANSICaretMoveAction moveAction, int count) {
+        return String.format(moveAction.getCode(), count);
+    }
+
+    public static String getANSICaretAction(ANSICaretMoveAction moveAction) {
+        return getANSICaretAction(moveAction, 1);
+    }
+
+    public static String getANSIClearAction(ANSIClearAction clearAction) {
+        return clearAction.getCode();
+    }
+
     private ANSIUtils() {
     }
 }

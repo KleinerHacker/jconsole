@@ -28,7 +28,7 @@ public final class JWindowsConsoleManipulator extends JAbstractConsoleManipulato
     }
 
     @Override
-    public void resetCaretPosition() throws JConsoleException {
+    public void restoreCaretPosition() throws JConsoleException {
 
     }
 
@@ -39,6 +39,56 @@ public final class JWindowsConsoleManipulator extends JAbstractConsoleManipulato
 
     @Override
     protected void updateCaretVisible(boolean visible) throws JConsoleException {
+
+    }
+
+    @Override
+    public void moveCaretUp(int count) throws JConsoleException {
+
+    }
+
+    @Override
+    public void moveCaretDown(int count) throws JConsoleException {
+
+    }
+
+    @Override
+    public void moveCaretForward(int count) throws JConsoleException {
+
+    }
+
+    @Override
+    public void moveCaretBackward(int count) throws JConsoleException {
+
+    }
+
+    @Override
+    public void clearScreen() throws JConsoleException {
+
+    }
+
+    @Override
+    public void clearScreenAfter() throws JConsoleException {
+
+    }
+
+    @Override
+    public void clearScreenBefore() throws JConsoleException {
+
+    }
+
+    @Override
+    public void clearLine() throws JConsoleException {
+
+    }
+
+    @Override
+    public void clearLineAfterCaret() throws JConsoleException {
+
+    }
+
+    @Override
+    public void clearLineBeforeCaret() throws JConsoleException {
 
     }
 

@@ -15,6 +15,8 @@ public class TestJConsole {
     public void test() throws IOException {
         final JConsole console = JConsoleFactory.getDefaultConsole();
         console.setConsoleManipulator(JANSIConsoleManipulator.class);
+        console.clearScreen();
+        console.write("\u001B[c");
 
         console.setForegroundColor(JConsoleColor.Red);
         console.writeLine("Hello World");
@@ -28,8 +30,15 @@ public class TestJConsole {
 
         console.setForegroundColor(JConsoleColor.Blue);
         console.gotoCaretPosition(10, 10);
-        console.writeLine("Hello World");
+        console.write("Hello World");
         console.resetForegroundColor();
+        console.moveCaretDown();
+
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 }

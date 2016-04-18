@@ -21,10 +21,26 @@ public interface JConsoleManipulator {
     }
     Point getCaretPosition() throws JConsoleException;
     void storeCaretPosition() throws JConsoleException;
-    void resetCaretPosition() throws JConsoleException;
+    void restoreCaretPosition() throws JConsoleException;
     void setCaretVisible(boolean flag) throws JConsoleException;
     BooleanProperty caretVisibleProperty() throws JConsoleException;
     boolean getCaretVisible() throws JConsoleException;
+    default void moveCaretUp() throws JConsoleException {
+        moveCaretUp(1);
+    }
+    void moveCaretUp(int count) throws JConsoleException;
+    default void moveCaretDown() throws JConsoleException {
+        moveCaretDown(1);
+    }
+    void moveCaretDown(int count) throws JConsoleException;
+    default void moveCaretForward() throws JConsoleException {
+        moveCaretForward(1);
+    }
+    void moveCaretForward(int count) throws JConsoleException;
+    default void moveCaretBackward() throws JConsoleException {
+        moveCaretBackward(1);
+    }
+    void moveCaretBackward(int count) throws JConsoleException;
 
     void setForegroundColor(JConsoleColor color) throws JConsoleException;
     void setBackgroundColor(JConsoleColor color) throws JConsoleException;
@@ -38,9 +54,67 @@ public interface JConsoleManipulator {
     JConsoleColor getBackgroundColor() throws JConsoleException;
     void resetForegroundColor() throws JConsoleException;
     void resetBackgroundColor() throws JConsoleException;
-    default void resertColor() throws JConsoleException {
+    default void resetColor() throws JConsoleException {
         resetForegroundColor();
         resetBackgroundColor();
+    }
+
+    void clearScreen() throws JConsoleException;
+    void clearScreenAfter() throws JConsoleException;
+    default void clearScreenAfter(int x, int y) throws JConsoleException {
+        storeCaretPosition();
+        try {
+            gotoCaretPosition(x, y);
+            clearScreenAfter();
+        } finally {
+            restoreCaretPosition();
+        }
+    }
+    default void clearScreenAfter(int line) throws JConsoleException {
+        clearScreenAfter(0, line);
+    }
+    void clearScreenBefore() throws JConsoleException;
+    default void clearScreenBefore(int x, int y) throws JConsoleException {
+        storeCaretPosition();
+        try {
+            gotoCaretPosition(x, y);
+            clearScreenBefore();
+        } finally {
+            restoreCaretPosition();
+        }
+    }
+    default void clearScreenBefore(int line) throws JConsoleException {
+        clearScreenBefore(0, line);
+    }
+    void clearLine() throws JConsoleException;
+    default void clearLine(int line) throws JConsoleException {
+        storeCaretPosition();
+        try {
+            gotoCaretPosition(0, line);
+            clearLine();
+        } finally {
+            restoreCaretPosition();
+        }
+    }
+    void clearLineAfterCaret() throws JConsoleException;
+    default void clearLineAfterCaret(int x, int y) throws JConsoleException {
+        storeCaretPosition();
+        try {
+            gotoCaretPosition(x, y);
+            clearLineAfterCaret();
+        } finally {
+            restoreCaretPosition();
+        }
+    }
+    void clearLineBeforeCaret() throws JConsoleException;
+    default void clearLineBeforeCaret(int x, int y) throws JConsoleException {
+        storeCaretPosition();
+        try {
+            gotoCaretPosition(x, y);
+            clearLineBeforeCaret();
+        } finally {
+            restoreCaretPosition();
+        }
     }
 
     void setBold(boolean bold) throws JConsoleException;

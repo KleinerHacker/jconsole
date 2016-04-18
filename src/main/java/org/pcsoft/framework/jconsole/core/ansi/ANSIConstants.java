@@ -15,7 +15,19 @@ final class ANSIConstants {
     public static final String TAG_CARET_GOTO_HOME = TAG_START + "H";
     public static final String TAG_CARET_VISIBLE = TAG_START + "?25l";
     public static final String TAG_CARET_INVISIBLE = TAG_START + "?25h";
+    public static final String TAG_CARET_STORE = TAG_START + "s";
+    public static final String TAG_CARET_RESTORE = TAG_START + "u";
+    public static final String TAG_CARET_MOVE_UP = TAG_START + "%sA";
+    public static final String TAG_CARET_MOVE_DOWN = TAG_START + "%sB";
+    public static final String TAG_CARET_MOVE_FORWARD = TAG_START + "%sC";
+    public static final String TAG_CARET_MOVE_BACKWARD = TAG_START + "%sD";
 
+    public static final String TAG_CLEAR_SCREEN = TAG_START + "2J";
+    public static final String TAG_CLEAR_SCREEN_AFTER = TAG_START + "J";
+    public static final String TAG_CLEAR_SCREEN_BEFORE = TAG_START + "1J";
+    public static final String TAG_CLEAR_LINE = TAG_START + "2K";
+    public static final String TAG_CLEAR_LINE_AFTER = TAG_START + "0K";
+    public static final String TAG_CLEAR_LINE_BEFORE = TAG_START + "1K";
 
     private ANSIConstants() {
     }
