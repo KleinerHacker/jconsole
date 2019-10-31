@@ -14,6 +14,7 @@ public final class JConsole {
     private static final Object MONITOR = new Object();
     public static final JConsoleVisual VISUAL = new JConsoleVisual();
     public static final JConsoleCursor CURSOR = new JConsoleCursor();
+    public static final JConsoleSystem SYSTEM = new JConsoleSystem();
 
     private static JConsoleInputMode inputMode = JConsoleInputMode.Default;
     private static boolean backBuffering = false;
@@ -218,6 +219,16 @@ public final class JConsole {
                 backBufferStr.append("\u001B[").append(value);
             } else {
                 System.out.print("\u001B[" + value);
+            }
+        }
+    }
+
+    static void printAnsiSpecial(String value) {
+        synchronized (MONITOR) {
+            if (backBuffering) {
+                backBufferStr.append("\u001B]").append(value);
+            } else {
+                System.out.print("\u001B]" + value);
             }
         }
     }

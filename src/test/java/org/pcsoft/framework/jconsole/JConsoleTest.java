@@ -1,15 +1,14 @@
 package org.pcsoft.framework.jconsole;
 
-import org.pcsoft.framework.jconsole.type.JConsoleColor;
-import org.pcsoft.framework.jconsole.type.JConsoleColorPair;
-import org.pcsoft.framework.jconsole.type.JConsoleFontStyle;
-import org.pcsoft.framework.jconsole.type.JConsoleInputMode;
+import org.pcsoft.framework.jconsole.type.*;
 
 public class JConsoleTest {
 
     public static void main(String[] args) {
         JConsole.startBackBuffering();
         try {
+            JConsole.SYSTEM.setWindowTitle("JConsole DEMO");
+            JConsole.SYSTEM.setWidth(JConsoleWidth.Default);
             JConsole.VISUAL.setForeground(JConsoleColor.createDefault(JConsoleColor.ColorValue.Red));
             JConsole.VISUAL.setBackground(JConsoleColor.createDefault(JConsoleColor.ColorValue.Yellow));
             JConsole.println("That is my text");
