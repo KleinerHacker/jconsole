@@ -1,238 +1,268 @@
 package org.pcsoft.framework.jconsole;
 
-import org.apache.commons.lang.SystemUtils;
-import org.pcsoft.framework.jconsole.internal.natives.ConsoleNative;
-import org.pcsoft.framework.jconsole.type.JConsoleClearAttribute;
-import org.pcsoft.framework.jconsole.type.JConsoleColorPair;
-import org.pcsoft.framework.jconsole.type.JConsoleInputMode;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.pcsoft.framework.jconsole.types.JConsoleColor;
+import org.pcsoft.framework.jconsole.types.JConsoleFont;
+import org.pcsoft.framework.jconsole.types.JConsolePoint;
 
-import java.io.IOException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@Getter
 public final class JConsole {
-    private static final Object MONITOR = new Object();
-    public static final JConsoleVisual VISUAL = new JConsoleVisual();
-    public static final JConsoleCursor CURSOR = new JConsoleCursor();
-    public static final JConsoleSystem SYSTEM = new JConsoleSystem();
+    private static final JConsole INSTANCE = new JConsole();
 
-    private static JConsoleInputMode inputMode = JConsoleInputMode.Default;
-    private static boolean backBuffering = false;
-    private static StringBuilder backBufferStr = null;
-
-    static {
-        ConsoleNative.initConsole();
+    public static JConsole getInstance() {
+        return INSTANCE;
     }
-
-    //region Print
-    public static void print(String s) {
-        synchronized (MONITOR) {
-            if (backBuffering) {
-                backBufferStr.append(s);
-            } else {
-                System.out.print(s);
-            }
-        }
-    }
-
-    public static void print(Object o) {
-        synchronized (MONITOR) {
-            if (backBuffering) {
-                backBufferStr.append(o);
-            } else {
-                System.out.print(o);
-            }
-        }
-    }
-
-    public static void println() {
-        synchronized (MONITOR) {
-            if (backBuffering) {
-                backBufferStr.append(SystemUtils.LINE_SEPARATOR);
-            } else {
-                System.out.println();
-            }
-        }
-    }
-
-    public static void println(String s) {
-        synchronized (MONITOR) {
-            if (backBuffering) {
-                backBufferStr.append(s).append(SystemUtils.LINE_SEPARATOR);
-            } else {
-                System.out.println(s);
-            }
-        }
-    }
-
-    public static void println(Object o) {
-        synchronized (MONITOR) {
-            if (backBuffering) {
-                backBufferStr.append(o).append(SystemUtils.LINE_SEPARATOR);
-            } else {
-                System.out.println(o);
-            }
-        }
-    }
-
-    public synchronized static void printAccent(String s, JConsoleColorPair accentColor) {
-        final Matcher matcher = Pattern.compile("<<[^>]+>>").matcher(s);
-
-        int currentIndex = 0;
-        while (matcher.find()) {
-            final int startIndex = matcher.start();
-            final int endIndex = matcher.end();
-
-            print(s.substring(currentIndex, startIndex));
-            final JConsoleColorPair tmp = VISUAL.getColor();
-            VISUAL.setColor(accentColor);
-            print(s.substring(startIndex + 2, endIndex - 2));
-            VISUAL.setColor(tmp);
-
-            currentIndex = endIndex;
-        }
-
-        print(s.substring(currentIndex));
-    }
-
-    public static void printlnAccent(String s, JConsoleColorPair accentColor) {
-        printAccent(s, accentColor);
-        println();
-    }
-
-    public static void clearLine() {
-        clearLine(JConsoleClearAttribute.All);
-    }
-
-    public static void clearLine(JConsoleClearAttribute attribute) {
-        printAnsi(attribute.getCode() + "K");
-    }
-
-    public static void clearScreen() {
-        clearScreen(JConsoleClearAttribute.All);
-    }
-
-    public static void clearScreen(JConsoleClearAttribute attribute) {
-        printAnsi(attribute.getCode() + "J");
-    }
-    //endregion
 
     //region Read
-    public static String readLine() {
-        synchronized (MONITOR) {
-            if (backBuffering)
-                throw new IllegalStateException("Unable to read from console while back buffering is started");
-        }
-
+    public String readLine() {
         return System.console().readLine();
     }
 
-    public static int read() {
-        synchronized (MONITOR) {
-            if (backBuffering)
-                throw new IllegalStateException("Unable to read from console while back buffering is started");
-        }
-
-        try {
-            return System.console().reader().read();
-        } catch (IOException e) {
-            throw new IllegalStateException(e);
-        }
+    public String readLine(String format, Object... args) {
+        return System.console().readLine(format, args);
     }
 
-    public static boolean hasKeyInput() {
-        synchronized (MONITOR) {
-            if (backBuffering)
-                throw new IllegalStateException("Unable to read from console while back buffering is started");
-        }
-
-        try {
-            return System.console().reader().ready();
-        } catch (IOException e) {
-            throw new IllegalStateException("Unknown error", e);
-        }
+    public char[] readPassword() {
+        return System.console().readPassword();
     }
 
-    public static void setInputMode(JConsoleInputMode inputMode) {
-        synchronized (MONITOR) {
-            if (backBuffering)
-                throw new IllegalStateException("Unable to read from console while back buffering is started");
-        }
-
-        ConsoleNative.setInputMode(inputMode);
-        JConsole.inputMode = inputMode;
-    }
-
-    public static JConsoleInputMode getInputMode() {
-        synchronized (MONITOR) {
-            if (backBuffering)
-                throw new IllegalStateException("Unable to read from console while back buffering is started");
-        }
-
-        return inputMode;
-    }
-
-    public static void resetInputMode() {
-        synchronized (MONITOR) {
-            if (backBuffering)
-                throw new IllegalStateException("Unable to read from console while back buffering is started");
-        }
-
-        ConsoleNative.resetInputMode();
-        inputMode = JConsoleInputMode.Default;
+    public char[] readPassword(String format, Object... args) {
+        return System.console().readPassword(format, args);
     }
     //endregion
 
+    //region Write
+    public void write(Object msg) {
+        System.out.print(msg);
+    }
 
-    public static boolean isBackBuffering() {
-        synchronized (MONITOR) {
-            return backBuffering;
+    public void writef(String msg, Object... args) {
+        System.out.printf(msg, args);
+    }
+
+    public void writeln(Object msg) {
+        System.out.println(msg);
+    }
+
+    public void writelnf(String msg, Object... args) {
+        System.out.printf(msg, args);
+        System.out.println();
+    }
+
+    public void writeln() {
+        System.out.println();
+    }
+    //endregion
+
+    //region Clear
+    public void clearScreen() {
+        System.out.print(JConsoleAnsi.ESCAPE + "[2J");
+    }
+
+    public void clearScreenAfterCursor() {
+        System.out.print(JConsoleAnsi.ESCAPE + "[0J");
+    }
+
+    public void clearScreenAfter(JConsolePoint point) {
+        saveCursorPosition();
+        moveCursor(point);
+        clearScreenAfterCursor();
+        restoreCursorPosition();
+    }
+
+    public void clearScreenBeforeCursor() {
+        System.out.print(JConsoleAnsi.ESCAPE + "[1J");
+    }
+
+    public void clearScreenBefore(JConsolePoint point) {
+        saveCursorPosition();
+        moveCursor(point);
+        clearScreenBeforeCursor();
+        restoreCursorPosition();
+    }
+
+    public void clearLine() {
+        System.out.print(JConsoleAnsi.ESCAPE + "[2K");
+    }
+
+    public void clearLineAfterCursor() {
+        System.out.print(JConsoleAnsi.ESCAPE + "[0K");
+    }
+
+    public void clearLineAfter(JConsolePoint point) {
+        saveCursorPosition();
+        moveCursor(point);
+        clearLineAfterCursor();
+        restoreCursorPosition();
+    }
+
+    public void clearLineBeforeCursor() {
+        System.out.print(JConsoleAnsi.ESCAPE + "[1K");
+    }
+
+    public void clearLineBefore(JConsolePoint point) {
+        saveCursorPosition();
+        moveCursor(point);
+        clearLineBeforeCursor();
+        restoreCursorPosition();
+    }
+    //endregion
+
+    //region Color
+    private JConsoleColor foregroundColor = JConsoleColor.DEFAULT;
+    private JConsoleColor backgroundColor = JConsoleColor.DEFAULT;
+
+    public void setForegroundColor(JConsoleColor foregroundColor) {
+        this.foregroundColor = foregroundColor;
+        JConsoleAnsi.setColor(30 + foregroundColor.getAnsiCode());
+    }
+
+    public void setBackgroundColor(JConsoleColor backgroundColor) {
+        this.backgroundColor = backgroundColor;
+        JConsoleAnsi.setColor(40 + backgroundColor.getAnsiCode());
+    }
+
+    public void setColor(JConsoleColor foregroundColor, JConsoleColor backgroundColor) {
+        setForegroundColor(foregroundColor);
+        setBackgroundColor(backgroundColor);
+    }
+
+    public void resetForegroundColor() {
+        setForegroundColor(JConsoleColor.DEFAULT);
+    }
+
+    public void resetBackgroundColor() {
+        setBackgroundColor(JConsoleColor.DEFAULT);
+    }
+
+    public void resetColor() {
+        resetForegroundColor();
+        resetBackgroundColor();
+    }
+    //endregion
+
+    //region Font
+    private JConsoleFont font = JConsoleFont.DEFAULT;
+
+    public void setFont(JConsoleFont font) {
+        this.font = font;
+        JConsoleAnsi.setFont(font);
+    }
+
+    public void resetFont() {
+        setFont(JConsoleFont.DEFAULT);
+    }
+    //endregion
+
+    //region Cursor
+    private boolean hasSavedCursorPosition;
+    private boolean cursorVisible;
+
+    public void saveCursorPosition() {
+        System.out.print(JConsoleAnsi.ESCAPE + " 7");
+        hasSavedCursorPosition = true;
+    }
+
+    public void restoreCursorPosition() {
+        if (!hasSavedCursorPosition)
+            throw new IllegalStateException("No cursor position stored yet");
+
+        System.out.print(JConsoleAnsi.ESCAPE + " 8");
+    }
+
+    public void resetCursorPosition() {
+        System.out.print(JConsoleAnsi.ESCAPE + "[H");
+    }
+
+    public void moveCursor(JConsolePoint point) {
+        System.out.print(JConsoleAnsi.ESCAPE + "[" + point.getX() + ";" + point.getY() + "H");
+    }
+
+    public void moveCursorUp(int lines, boolean backToStart) {
+        if (backToStart) {
+            JConsoleAnsi.moveCursor("F", lines);
+        } else {
+            JConsoleAnsi.moveCursor("A", lines);
         }
     }
 
-    public static void startBackBuffering() {
-        synchronized (MONITOR) {
-            if (backBuffering)
-                throw new IllegalStateException("Back buffering already started");
+    public void moveCursorUp(int lines) {
+        moveCursorUp(lines, false);
+    }
 
-            backBuffering = true;
-            backBufferStr = new StringBuilder();
+    public void moveCursorUp(boolean backToStart) {
+        moveCursorUp(1, backToStart);
+    }
+
+    public void moveCursorUp() {
+        moveCursorUp(1, false);
+    }
+
+    public void moveCursorDown(int lines, boolean backToStart) {
+        if (backToStart) {
+            JConsoleAnsi.moveCursor("E", lines);
+        } else {
+            JConsoleAnsi.moveCursor("B", lines);
         }
     }
 
-    public static void endBackBuffering() {
-        synchronized (MONITOR) {
-            if (!backBuffering)
-                throw new IllegalStateException("Back buffering not started");
-
-            backBuffering = false;
-            if (backBufferStr.length() > 0) {
-                System.out.print(backBufferStr.toString());
-            }
-            backBufferStr = null;
-        }
+    public void moveCursorDown(int lines) {
+        moveCursorDown(lines, false);
     }
 
-    static void printAnsi(String value) {
-        synchronized (MONITOR) {
-            if (backBuffering) {
-                backBufferStr.append("\u001B[").append(value);
-            } else {
-                System.out.print("\u001B[" + value);
-            }
-        }
+    public void moveCursorDown(boolean backToStart) {
+        moveCursorDown(1, backToStart);
     }
 
-    static void printAnsiSpecial(String value) {
-        synchronized (MONITOR) {
-            if (backBuffering) {
-                backBufferStr.append("\u001B]").append(value);
-            } else {
-                System.out.print("\u001B]" + value);
-            }
-        }
+    public void moveCursorDown() {
+        moveCursorDown(1, false);
     }
 
-    private JConsole() {
+    public void moveCursorRight(int lines) {
+        JConsoleAnsi.moveCursor("C", lines);
     }
+
+    public void moveCursorRight() {
+        moveCursorRight(1);
+    }
+
+    public void moveCursorLeft(int lines) {
+        JConsoleAnsi.moveCursor("D", lines);
+    }
+
+    public void moveCursorLeft() {
+        moveCursorLeft(1);
+    }
+
+    public void setCursorVisible(boolean cursorVisible) {
+        this.cursorVisible = cursorVisible;
+        System.out.print(JConsoleAnsi.ESCAPE + "[?25" + (cursorVisible ? "h" : "l"));
+    }
+    //endregion
+
+    //region Commons
+    private boolean hasSavedScreen;
+    private boolean wrapping;
+
+    public void saveScreen() {
+        System.out.print(JConsoleAnsi.ESCAPE + "[?47h");
+        hasSavedScreen = true;
+    }
+
+    public void restoreScreen() {
+        if (!hasSavedScreen)
+            throw new IllegalStateException("No screen stored yet");
+
+        System.out.print(JConsoleAnsi.ESCAPE + "[?47l");
+    }
+
+    public void setWrapping(boolean wrapping) {
+        this.wrapping = wrapping;
+        System.out.print(JConsoleAnsi.ESCAPE + "[=7" + (wrapping ? "h" : "l"));
+    }
+
+    //endregion
 }
